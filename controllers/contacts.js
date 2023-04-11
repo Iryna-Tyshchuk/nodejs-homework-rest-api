@@ -7,13 +7,14 @@ const getAll = async (req, res) => {
   const { page = 1, limit = 20, favorite } = req.query;
   const skip = (page - 1) * limit;
   const result = await Contact.find(
-    favorite ? { owner, favorite } : { owner },
+    // (favorite === true || favorite === false)  ? { owner, favorite } : { owner },
+    favorite === undefined ? { owner } : { owner, favorite },
     "-createdAt -updatedAt",
     {
       skip,
       limit,
     }
-  ).populate("owner", "email subscription");
+  ).populate("owner", "email");
   res.json(result);
 };
 
