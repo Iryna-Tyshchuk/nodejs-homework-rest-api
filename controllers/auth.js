@@ -67,9 +67,20 @@ const logout = async (req, res) => {
   });
 };
 
+const subscription = async (req, res) => {
+    // const { subscription } = req.user;
+  
+    const result = await User.findOneAndUpdate(req.user._id, req.body, {
+      new: true,
+    });
+  
+    res.json({ result });
+  };
+
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
   getCurrent: ctrlWrapper(getCurrent),
   logout: ctrlWrapper(logout),
+  subscription: ctrlWrapper(subscription),
 };
